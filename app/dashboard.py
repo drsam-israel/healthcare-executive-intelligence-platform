@@ -5,6 +5,11 @@ import plotly.express as px
 import plotly.graph_objects as go
 import joblib
 
+from auth import login, check_authentication
+
+if not check_authentication():
+    login()
+    st.stop()
 st.set_page_config(
     page_title="Healthcare Executive Intelligence Platform",
     page_icon="🏥",
