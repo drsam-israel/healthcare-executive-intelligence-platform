@@ -20,21 +20,8 @@ Healthcare-Executive-Intelligence-AI-Platform)
 
 ![Streamlit](https://img.shields.io/badge/Streamlit-Executive%20Dashboard-red?style=for-the-badge&logo=streamlit)
 
-![Machine Learning](https://img.shields.io/badge/Machine-Learning-orange?style=for-the-badge&logo=scikitlearn)
+![Machine Learning](https://img.shields.io/badge/Machine-Learning-orange?style=for-the-badge&logo=scikitlearn)![Healthcare AI](https://img.shields.io/badge/Healthcare-AI-success?style=for-the-badge)![Explainable AI](https://img.shields.io/badge/Explainable-AI-purple?style=for-the-badge)![Operational Intelligence](https://img.shields.io/badge/Operational-Intelligence-informational?style=for-the-badge)![Forecasting](https://img.shields.io/badge/Predictive-Forecasting-blueviolet?style=for-the-badge)![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen?style=for-the-badge)![Deployment](https://img.shields.io/badge/Deployment-Streamlit%20Cloud-ff4b4b?style=for-the-badge&logo=streamlit)![License](https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge)
 
-![Healthcare AI](https://img.shields.io/badge/Healthcare-AI-success?style=for-the-badge)
-
-![Explainable AI](https://img.shields.io/badge/Explainable-AI-purple?style=for-the-badge)
-
-![Operational Intelligence](https://img.shields.io/badge/Operational-Intelligence-informational?style=for-the-badge)
-
-![Forecasting](https://img.shields.io/badge/Predictive-Forecasting-blueviolet?style=for-the-badge)
-
-![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen?style=for-the-badge)
-
-![Deployment](https://img.shields.io/badge/Deployment-Streamlit%20Cloud-ff4b4b?style=for-the-badge&logo=streamlit)
-
-![License](https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge)
 ## Enterprise Diabetes Readmission Intelligence & Predictive Healthcare AI Platform
 
 An enterprise-grade Healthcare AI platform designed for executive healthcare intelligence, diabetes readmission analytics, operational forecasting, explainable AI, financial risk analytics, and predictive clinical decision support.
