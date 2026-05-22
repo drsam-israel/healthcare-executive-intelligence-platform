@@ -127,6 +127,22 @@ st.markdown(
         border-left: 5px solid #2563EB;
     }
 
+    /* KPI LABEL */
+    [data-testid="metric-container"] label {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #1e293b !important;
+    letter-spacing: -0.2px;
+}
+
+    /* KPI VALUE */
+    [data-testid="stMetricValue"] {
+    font-size: 36px !important;
+    font-weight: 900 !important;
+    color: #020617 !important;
+    letter-spacing: -1px;
+}
+
     /* DIVIDER */
     hr {
         border: none;
@@ -149,72 +165,6 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
-# ==========================================
-# AUTHENTICATION
-# ==========================================
-
-USERS = {
-    "executive": {
-        "password": "exec123",
-        "role": "Executive"
-    },
-    "operations": {
-        "password": "ops123",
-        "role": "Operations Manager"
-    },
-    "clinical": {
-        "password": "clinical123",
-        "role": "Clinical AI Lead"
-    },
-    "admin": {
-        "password": "admin123",
-        "role": "Data Science Admin"
-    }
-}
-
-
-def login():
-    st.sidebar.markdown("## 🔐 Enterprise Login")
-
-    username = st.sidebar.text_input("Username")
-    password = st.sidebar.text_input("Password", type="password")
-
-    if st.sidebar.button("Login"):
-        if username in USERS and USERS[username]["password"] == password:
-            st.session_state["authenticated"] = True
-            st.session_state["username"] = username
-            st.session_state["role"] = USERS[username]["role"]
-            st.rerun()
-        else:
-            st.sidebar.error("Invalid username or password")
-
-
-if "authenticated" not in st.session_state:
-    st.session_state["authenticated"] = False
-
-
-if not st.session_state["authenticated"]:
-    st.title("🏥 Healthcare Executive Intelligence & Predictive AI Platform")
-    st.caption(
-        "Enterprise healthcare command center for operations intelligence, predictive AI, bed occupancy, financial analytics, and executive strategy."
-    )
-    st.warning("Please log in to access the platform.")
-
-    login()
-
-    st.info(
-        """
-        Demo Login Accounts:
-
-        Executive: executive / exec123  
-        Operations Manager: operations / ops123  
-        Clinical AI Lead: clinical / clinical123  
-        Data Science Admin: admin / admin123
-        """
-    )
-
-    st.stop()
 
 
 # ==========================================
@@ -243,56 +193,52 @@ model_features = model_package["features"]
 # ==========================================
 # SIDEBAR NAVIGATION
 # ==========================================
+st.sidebar.markdown("""
+<div style="
+    padding-top:10px;
+    padding-bottom:18px;
+">
 
-st.sidebar.markdown("## 🏥 Healthcare Executive Dashboard")
-st.sidebar.success(f"Logged in as: {st.session_state['role']}")
+<div style="
+    font-size:42px;
+    margin-bottom:10px;
+">
+🏥
+</div>
 
-if st.sidebar.button("Logout"):
-    st.session_state.clear()
-    st.rerun()
+<div style="
+    font-size:42px;
+    font-weight:900;
+    line-height:1.05;
+    color:white;
+    margin-bottom:18px;
+">
+DiaIntel AI
+</div>
 
+<div style="
+    font-size:17px;
+    line-height:1.7;
+    color:rgba(255,255,255,0.82);
+    font-weight:500;
+">
+Enterprise Diabetes Readmission Intelligence & Predictive Healthcare AI Platform
+</div>
 
-role = st.session_state["role"]
-
-
-if role == "Executive":
-    pages = [
-        "📊 Executive Command Center",
-        "💰 Financial Performance Analytics",
-        "📈 Operational Forecasting",
-        "📘 Executive Insights & Strategy"
-    ]
-
-elif role == "Operations Manager":
-    pages = [
-        "📊 Executive Command Center",
-        "🏥 Operations Intelligence",
-        "🛏️ Bed Occupancy Intelligence",
-        "📈 Operational Forecasting"
-    ]
-
-elif role == "Clinical AI Lead":
-    pages = [
-        "⚠️ Quality & Risk Intelligence",
-        "🧠 Predictive Clinical AI",
-        "🔍 Explainable AI Intelligence",
-        "📘 Executive Insights & Strategy"
-    ]
-
-else:
-    pages = [
-        "📊 Executive Command Center",
-        "🏥 Operations Intelligence",
-        "🛏️ Bed Occupancy Intelligence",
-        "⚠️ Quality & Risk Intelligence",
-        "💰 Financial Performance Analytics",
-        "🧠 Predictive Clinical AI",
-        "🔍 Explainable AI Intelligence",
-        "📈 Operational Forecasting",
-        "📘 Executive Insights & Strategy",
-        "📂 Enterprise Data Explorer"
-    ]
-
+</div>
+""", unsafe_allow_html=True)
+pages = [
+    "📊 Executive Command Center",
+    "🏥 Operations Intelligence",
+    "🛏️ Bed Occupancy Intelligence",
+    "⚠️ Quality & Risk Intelligence",
+    "💰 Financial Performance Analytics",
+    "🧠 Predictive Clinical AI",
+    "🔍 Explainable AI Intelligence",
+    "📈 Operational Forecasting",
+    "📘 Executive Insights & Strategy",
+    "📂 Enterprise Data Explorer"
+]
 
 page = st.sidebar.radio(
     "Executive Navigation",
@@ -310,56 +256,49 @@ st.sidebar.markdown("## 🎛️ Enterprise Filters")
 
 filtered_df = df.copy()
 
-age_filter = st.sidebar.multiselect(
+age_filter = st.sidebar.selectbox(
     "Age Group",
-    options=sorted(df["age"].dropna().unique()),
-    default=[],
-    key="age_filter"
+    ["All"] + sorted(df["age"].dropna().unique().tolist())
 )
 
-gender_filter = st.sidebar.multiselect(
+gender_filter = st.sidebar.selectbox(
     "Gender",
-    options=sorted(df["gender"].dropna().unique()),
-    default=[],
-    key="gender_filter"
+    ["All"] + sorted(df["gender"].dropna().unique().tolist())
 )
 
-race_filter = st.sidebar.multiselect(
+race_filter = st.sidebar.selectbox(
     "Race",
-    options=sorted(df["race"].dropna().unique()),
-    default=[],
-    key="race_filter"
+    ["All"] + sorted(df["race"].dropna().unique().tolist())
 )
 
-specialty_filter = st.sidebar.multiselect(
+specialty_filter = st.sidebar.selectbox(
     "Medical Specialty",
-    options=sorted(df["medical_specialty"].dropna().unique()),
-    default=[],
-    key="specialty_filter"
+    ["All"] + sorted(df["medical_specialty"].dropna().unique().tolist())
 )
 
-readmission_filter = st.sidebar.multiselect(
+readmission_filter = st.sidebar.selectbox(
     "Readmission Status",
-    options=sorted(df["readmitted"].dropna().unique()),
-    default=[],
-    key="readmission_filter"
+    ["All"] + sorted(df["readmitted"].dropna().unique().tolist())
 )
 
-if age_filter:
-    filtered_df = filtered_df[filtered_df["age"].isin(age_filter)]
+if age_filter != "All":
+    filtered_df = filtered_df[filtered_df["age"] == age_filter]
 
-if gender_filter:
-    filtered_df = filtered_df[filtered_df["gender"].isin(gender_filter)]
+if gender_filter != "All":
+    filtered_df = filtered_df[filtered_df["gender"] == gender_filter]
 
-if race_filter:
-    filtered_df = filtered_df[filtered_df["race"].isin(race_filter)]
+if race_filter != "All":
+    filtered_df = filtered_df[filtered_df["race"] == race_filter]
 
-if specialty_filter:
-    filtered_df = filtered_df[filtered_df["medical_specialty"].isin(specialty_filter)]
+if specialty_filter != "All":
+    filtered_df = filtered_df[
+        filtered_df["medical_specialty"] == specialty_filter
+    ]
 
-if readmission_filter:
-    filtered_df = filtered_df[filtered_df["readmitted"].isin(readmission_filter)]
-
+if readmission_filter != "All":
+    filtered_df = filtered_df[
+        filtered_df["readmitted"] == readmission_filter
+    ]
 
 # ==========================================
 # FILTERED KPI ENGINE
@@ -389,9 +328,19 @@ if page == "📊 Executive Command Center":
 
     st.title("🏥 Healthcare Executive Intelligence Dashboard")
 
-    st.caption(
-        "Enterprise command center for hospital operations, utilization, bed occupancy, predictive AI, and executive decision support."
-    )
+    st.markdown("""
+<div style="
+    font-size:22px;
+    font-weight:600;
+    color:#334155;
+    line-height:1.7;
+    max-width:1200px;
+    margin-top:10px;
+    margin-bottom:24px;
+">
+AI-powered enterprise healthcare intelligence platform delivering diabetes readmission analytics, predictive clinical AI, explainable AI, operational forecasting, bed occupancy intelligence, financial risk analytics, and executive decision support.
+</div>
+""", unsafe_allow_html=True)
 
     st.divider()
 
@@ -971,20 +920,110 @@ elif page == "📈 Operational Forecasting":
 # ==========================================
 
 elif page == "📘 Executive Insights & Strategy":
+     
+    st.title("🏆 Executive Insights & Recommendations")
+    
 
-    st.title("📘 Executive Insights & Strategy")
+    st.markdown("""
+    <div class="analytics-card">
 
-    st.write(
-        f"""
-        - The selected cohort contains approximately {total_admissions:,} diabetic admissions.
-        - The readmission burden is approximately {readmission_rate:.2f}%.
-        - Average hospital LOS is approximately {average_los:.2f} days.
-        - Emergency admissions account for approximately {emergency_rate:.2f}% of this cohort.
-        - Estimated bed occupancy pressure is approximately {bed_occupancy_rate:.1f}%.
-        """
-    )
+    <div class="analytics-title">
+                
 
+    
+    </div>
 
+    <div class="analytics-subtitle">
+    Executive insights and recommendations generated from enterprise healthcare utilization, predictive AI, operational intelligence, forecasting, financial analytics, and explainable AI modeling.
+    </div>
+
+    <hr class="section-divider">
+
+    <h3 style="color:#0f172a;">📊  Executive Insights</h3>
+
+    <ul style="line-height:1.9; color:#334155;">
+
+    <li>Total hospital admissions analyzed: <b>101,766</b></li>
+
+    <li>Overall enterprise readmission rate: <b>46.09%</b></li>
+
+    <li>Estimated inpatient bed occupancy: <b>79.9%</b></li>
+
+    <li>Estimated ICU occupancy: <b>87.9%</b></li>
+
+    <li>Forecasted ICU occupancy projected to reach approximately <b>95.8%</b></li>
+
+    <li>Average inpatient length of stay (LOS): <b>4.40 days</b></li>
+
+    <li>Emergency admission utilization exceeded <b>71.23%</b></li>
+
+    <li>Estimated enterprise operational cost burden exceeded <b>$865M</b></li>
+
+    <li>Estimated readmission-related financial burden reached approximately <b>$562.8M</b></li>
+
+    <li>LOS-related operational cost exposure exceeded approximately <b>$805.3M</b></li>
+
+    <li>Potential 20% readmission reduction could generate approximately <b>$112.6M</b> in projected savings</li>
+
+    <li>Highest inpatient utilization concentration occurred among patients aged <b>60–80 years</b></li>
+
+    <li>Explainable AI identified inpatient utilization frequency, discharge disposition, emergency utilization, LOS duration, medication burden, and diagnosis complexity as the strongest readmission risk drivers.</li>
+
+    <li>Forecasting models indicate progressive escalation in inpatient utilization, ICU occupancy, and operational capacity pressure.</li>
+
+    </ul>
+
+    <hr class="section-divider">
+
+    <h3 style="color:#0f172a;">🚀 Executive Recommendations</h3>
+
+    <ul style="line-height:1.9; color:#334155;">
+
+    <li>Prioritize enterprise readmission reduction initiatives, where readmission burden reached <b>46.09%</b>.</li>
+
+    <li>Implement predictive AI discharge-risk scoring to support discharge planning and post-discharge follow-up.</li>
+
+    <li>Strengthen ICU throughput optimization and surge-capacity planning as ICU occupancy approaches <b>95.8%</b>.</li>
+
+    <li>Reduce inpatient LOS through multidisciplinary discharge coordination and AI-assisted care progression monitoring.</li>
+
+    <li>Optimize emergency department throughput workflows as ED utilization exceeded <b>71.23%</b>.</li>
+
+    <li>Prioritize population health interventions for patients aged <b>60–80 years</b>.</li>
+
+    <li>Deploy explainable AI governance frameworks to improve transparency, executive trust, and AI adoption.</li>
+
+    <li>Monitor LOS-related financial exposure, which exceeded approximately <b>$805M</b>.</li>
+
+    <li>Expand predictive operational intelligence capabilities to improve staffing allocation and enterprise forecasting.</li>
+
+    </ul>
+
+    <hr class="section-divider">
+
+    <h3 style="color:#0f172a;">🏆 Strategic Executive Summary</h3>
+
+    <p style="line-height:1.9; color:#475569; font-size:16px;">
+
+    Across <b>101,766 hospital admissions</b>, the platform identified an enterprise readmission rate of <b>46.09%</b>, ICU occupancy of <b>87.9%</b>, average LOS of <b>4.40 days</b>, and operational cost exposure exceeding <b>$865M</b>.
+
+    <br><br>
+
+    Operational forecasting identified progressive increases in inpatient and ICU utilization, with ICU occupancy projected to approach <b>95.8%</b>, indicating elevated enterprise capacity risk.
+
+    <br><br>
+
+    Explainable AI modeling identified inpatient utilization frequency, discharge complexity, emergency utilization, LOS duration, and medication burden as the strongest drivers of readmission risk.
+
+    <br><br>
+
+    The highest-impact enterprise priorities include readmission reduction, LOS optimization, ICU capacity management, ED throughput improvement, predictive operational forecasting, financial utilization optimization, and explainable AI-driven healthcare decision support.
+
+    </p>
+
+    </div>
+    """, unsafe_allow_html=True)
+      
 # ==========================================
 # DATA EXPLORER
 # ==========================================
