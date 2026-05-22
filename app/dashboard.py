@@ -11,7 +11,7 @@ if not check_authentication():
     login()
     st.stop()
 st.set_page_config(
-    page_title="Healthcare Executive Intelligence Platform",
+    page_title="DiaIntel AI",
     page_icon="🏥",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -326,9 +326,12 @@ estimated_cost = total_admissions * 8500
 
 if page == "📊 Executive Command Center":
 
-    st.title("🏥 Healthcare Executive Intelligence Dashboard")
+    st.title("🏥 DiaIntel AI")
+st.caption(
+    "Enterprise Diabetes Readmission Intelligence & Predictive Healthcare AI Platform"
+    )
 
-    st.markdown("""
+st.markdown("""
 <div style="
     font-size:22px;
     font-weight:600;
