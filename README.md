@@ -7,13 +7,12 @@
 # 🌍 Live Executive Healthcare AI Platform
 
 ## 🔗 Live Demo
-[Launch DiaIntel AI](https://https://healthcare-executive-intelligence-platform-h7a9etjs67ogqjjne3r.streamlit.app/)
+[Launch DiaIntel AI](https://healthcare-executive-intelligence-platform-hhc25m9bn3etmvc6zgx.streamlit.app/)
 
 ---
 
 ## 💻 GitHub Repository
-[View Source Code](https://github.com/drsam-israel/
-Healthcare-Executive-Intelligence-AI-Platform)
+[View Source Code](https://github.com/drsam-israel/healthcare-executive-intelligence-platform)
 
 ---
 ![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python)![Streamlit](https://img.shields.io/badge/Streamlit-Executive%20Dashboard-red?style=for-the-badge&logo=streamlit)![Machine Learning](https://img.shields.io/badge/Machine-Learning-orange?style=for-the-badge&logo=scikitlearn)![Healthcare AI](https://img.shields.io/badge/Healthcare-AI-success?style=for-the-badge)![Explainable AI](https://img.shields.io/badge/Explainable-AI-purple?style=for-the-badge)![Operational Intelligence](https://img.shields.io/badge/Operational-Intelligence-informational?style=for-the-badge)![Forecasting](https://img.shields.io/badge/Predictive-Forecasting-blueviolet?style=for-the-badge)![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen?style=for-the-badge)![Deployment](https://img.shields.io/badge/Deployment-Streamlit%20Cloud-ff4b4b?style=for-the-badge&logo=streamlit)![License](https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge)
