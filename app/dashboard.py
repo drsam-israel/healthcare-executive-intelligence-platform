@@ -5,11 +5,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import joblib
 
-from auth import login, check_authentication
 
-if not check_authentication():
-    login()
-    st.stop()
 st.set_page_config(
     page_title="DiaIntel AI",
     page_icon="🏥",
@@ -327,34 +323,29 @@ estimated_cost = total_admissions * 8500
 if page == "📊 Executive Command Center":
 
     st.title("🏥 DiaIntel AI")
-st.caption(
-    "Enterprise Diabetes Readmission Intelligence & Predictive Healthcare AI Platform"
-    )
 
-st.markdown("""
-<div style="
-    font-size:22px;
-    font-weight:600;
-    color:#334155;
-    line-height:1.7;
-    max-width:1200px;
-    margin-top:10px;
-    margin-bottom:24px;
-">
-AI-powered enterprise healthcare intelligence platform delivering diabetes readmission analytics, predictive clinical AI, explainable AI, operational forecasting, bed occupancy intelligence, financial risk analytics, and executive decision support.
-</div>
-""", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <div style="
+            color:#475569;
+            font-size:18px;
+            line-height:1.8;
+            margin-bottom:24px;
+        ">
+            Enterprise Diabetes Readmission Intelligence & Predictive Healthcare AI Platform delivering diabetes readmission analytics, predictive clinical AI, explainable AI, operational forecasting, bed occupancy intelligence, financial risk analytics, and executive decision support.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
     st.divider()
 
     col1, col2, col3 = st.columns(3)
-
     col1.metric("Filtered Admissions", f"{total_admissions:,}")
     col2.metric("Average LOS", f"{average_los:.2f} days")
     col3.metric("Readmission Rate", f"{readmission_rate:.2f}%")
 
     col4, col5, col6 = st.columns(3)
-
     col4.metric("ED Admission Rate", f"{emergency_rate:.2f}%")
     col5.metric("Bed Occupancy", f"{bed_occupancy_rate:.1f}%")
     col6.metric("ICU Occupancy", f"{icu_occupancy_rate:.1f}%")
@@ -387,7 +378,6 @@ elif page == "🏥 Operations Intelligence":
     )
 
     col1, col2, col3 = st.columns(3)
-
     col1.metric("Filtered Admissions", f"{total_admissions:,}")
     col2.metric("Average LOS", f"{average_los:.2f} days")
     col3.metric("Average Medications", f"{average_medications:.2f}")
@@ -404,7 +394,6 @@ elif page == "🏥 Operations Intelligence":
         color="Readmission Status",
         title="Readmission Distribution"
     )
-
     st.plotly_chart(fig_readmit, use_container_width=True)
 
     los_chart = (
@@ -420,7 +409,6 @@ elif page == "🏥 Operations Intelligence":
         color="readmitted",
         title="Average Length of Stay by Readmission Status"
     )
-
     st.plotly_chart(fig_los, use_container_width=True)
 
     age_chart = filtered_df["age"].value_counts().reset_index()
@@ -433,7 +421,6 @@ elif page == "🏥 Operations Intelligence":
         color="Count",
         title="Patient Age Distribution"
     )
-
     st.plotly_chart(fig_age, use_container_width=True)
 
 
@@ -450,7 +437,6 @@ elif page == "🛏️ Bed Occupancy Intelligence":
     )
 
     col1, col2, col3 = st.columns(3)
-
     col1.metric("Estimated Bed Occupancy", f"{bed_occupancy_rate:.1f}%")
     col2.metric("Estimated ICU Occupancy", f"{icu_occupancy_rate:.1f}%")
     col3.metric("Average LOS", f"{average_los:.2f} days")
@@ -473,7 +459,6 @@ elif page == "🛏️ Bed Occupancy Intelligence":
             }
         )
     )
-
     st.plotly_chart(fig_bed, use_container_width=True)
 
     fig_icu = go.Figure(
@@ -492,7 +477,6 @@ elif page == "🛏️ Bed Occupancy Intelligence":
             }
         )
     )
-
     st.plotly_chart(fig_icu, use_container_width=True)
 
 
@@ -507,7 +491,6 @@ elif page == "⚠️ Quality & Risk Intelligence":
     st.caption("Readmission burden, utilization risk, and patient safety intelligence.")
 
     col1, col2 = st.columns(2)
-
     col1.metric("Readmission Rate", f"{readmission_rate:.2f}%")
     col2.metric("Emergency Admissions", f"{emergency_admissions:,}")
 
@@ -523,7 +506,6 @@ elif page == "⚠️ Quality & Risk Intelligence":
         color="Readmission Status",
         title="Readmission Risk Distribution"
     )
-
     st.plotly_chart(fig_quality, use_container_width=True)
 
 
@@ -550,13 +532,11 @@ elif page == "💰 Financial Performance Analytics":
     avoidable_readmission_savings = estimated_readmission_cost * 0.20
 
     col1, col2, col3 = st.columns(3)
-
     col1.metric("Estimated Total Cost", f"${total_operational_cost:,.0f}")
     col2.metric("Readmission Cost Burden", f"${estimated_readmission_cost:,.0f}")
     col3.metric("LOS Cost Burden", f"${los_cost_burden:,.0f}")
 
     col4, col5 = st.columns(2)
-
     col4.metric("Potential 20% Readmission Savings", f"${avoidable_readmission_savings:,.0f}")
     col5.metric("Avg Cost per Admission", f"${avg_cost_per_admission:,.0f}")
 
@@ -584,13 +564,13 @@ elif page == "💰 Financial Performance Analytics":
         color="Cost Category",
         title="Estimated Financial Burden by Cost Category"
     )
-
     st.plotly_chart(fig_financial, use_container_width=True)
 
 
 # ==========================================
 # PREDICTIVE CLINICAL AI
 # ==========================================
+
 elif page == "🧠 Predictive Clinical AI":
 
     st.title("🧠 Predictive Clinical AI")
@@ -604,137 +584,29 @@ elif page == "🧠 Predictive Clinical AI":
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        race = st.selectbox(
-            "Race",
-            sorted(df["race"].dropna().unique()),
-            key="ml_race"
-        )
-
-        gender = st.selectbox(
-            "Gender",
-            sorted(df["gender"].dropna().unique()),
-            key="ml_gender"
-        )
-
-        age = st.selectbox(
-            "Age Group",
-            sorted(df["age"].dropna().unique()),
-            key="ml_age"
-        )
-
-        admission_type_id = st.selectbox(
-            "Admission Type ID",
-            sorted(df["admission_type_id"].dropna().unique()),
-            key="ml_admission_type"
-        )
-
-        discharge_disposition_id = st.selectbox(
-            "Discharge Disposition ID",
-            sorted(df["discharge_disposition_id"].dropna().unique()),
-            key="ml_discharge"
-        )
-
-        admission_source_id = st.selectbox(
-            "Admission Source ID",
-            sorted(df["admission_source_id"].dropna().unique()),
-            key="ml_admission_source"
-        )
+        race = st.selectbox("Race", sorted(df["race"].dropna().unique()), key="ml_race")
+        gender = st.selectbox("Gender", sorted(df["gender"].dropna().unique()), key="ml_gender")
+        age = st.selectbox("Age Group", sorted(df["age"].dropna().unique()), key="ml_age")
+        admission_type_id = st.selectbox("Admission Type ID", sorted(df["admission_type_id"].dropna().unique()), key="ml_admission_type")
+        discharge_disposition_id = st.selectbox("Discharge Disposition ID", sorted(df["discharge_disposition_id"].dropna().unique()), key="ml_discharge")
+        admission_source_id = st.selectbox("Admission Source ID", sorted(df["admission_source_id"].dropna().unique()), key="ml_admission_source")
 
     with col2:
-        time_in_hospital = st.slider(
-            "Hospital Length of Stay",
-            1,
-            14,
-            5,
-            key="ml_los"
-        )
-
-        num_lab_procedures = st.slider(
-            "Lab Procedures",
-            1,
-            120,
-            45,
-            key="ml_lab"
-        )
-
-        num_procedures = st.slider(
-            "Procedures",
-            0,
-            6,
-            1,
-            key="ml_procedures"
-        )
-
-        num_medications = st.slider(
-            "Number of Medications",
-            1,
-            80,
-            15,
-            key="ml_meds"
-        )
-
-        number_outpatient = st.slider(
-            "Outpatient Visits",
-            0,
-            40,
-            1,
-            key="ml_outpatient"
-        )
-
-        number_emergency = st.slider(
-            "Emergency Visits",
-            0,
-            20,
-            0,
-            key="ml_emergency"
-        )
+        time_in_hospital = st.slider("Hospital Length of Stay", 1, 14, 5, key="ml_los")
+        num_lab_procedures = st.slider("Lab Procedures", 1, 120, 45, key="ml_lab")
+        num_procedures = st.slider("Procedures", 0, 6, 1, key="ml_procedures")
+        num_medications = st.slider("Number of Medications", 1, 80, 15, key="ml_meds")
+        number_outpatient = st.slider("Outpatient Visits", 0, 40, 1, key="ml_outpatient")
+        number_emergency = st.slider("Emergency Visits", 0, 20, 0, key="ml_emergency")
 
     with col3:
-        number_inpatient = st.slider(
-            "Previous Inpatient Visits",
-            0,
-            20,
-            1,
-            key="ml_inpatient"
-        )
-
-        number_diagnoses = st.slider(
-            "Number of Diagnoses",
-            1,
-            16,
-            8,
-            key="ml_diagnoses"
-        )
-
-        max_glu_serum = st.selectbox(
-            "Max Glucose Serum",
-            sorted(df["max_glu_serum"].dropna().unique()),
-            key="ml_glucose"
-        )
-
-        A1Cresult = st.selectbox(
-            "A1C Result",
-            sorted(df["A1Cresult"].dropna().unique()),
-            key="ml_a1c"
-        )
-
-        insulin = st.selectbox(
-            "Insulin Usage",
-            sorted(df["insulin"].dropna().unique()),
-            key="ml_insulin"
-        )
-
-        change = st.selectbox(
-            "Medication Change",
-            sorted(df["change"].dropna().unique()),
-            key="ml_change"
-        )
-
-        diabetesMed = st.selectbox(
-            "Diabetes Medication",
-            sorted(df["diabetesMed"].dropna().unique()),
-            key="ml_diabetesmed"
-        )
+        number_inpatient = st.slider("Previous Inpatient Visits", 0, 20, 1, key="ml_inpatient")
+        number_diagnoses = st.slider("Number of Diagnoses", 1, 16, 8, key="ml_diagnoses")
+        max_glu_serum = st.selectbox("Max Glucose Serum", sorted(df["max_glu_serum"].dropna().unique()), key="ml_glucose")
+        A1Cresult = st.selectbox("A1C Result", sorted(df["A1Cresult"].dropna().unique()), key="ml_a1c")
+        insulin = st.selectbox("Insulin Usage", sorted(df["insulin"].dropna().unique()), key="ml_insulin")
+        change = st.selectbox("Medication Change", sorted(df["change"].dropna().unique()), key="ml_change")
+        diabetesMed = st.selectbox("Diabetes Medication", sorted(df["diabetesMed"].dropna().unique()), key="ml_diabetesmed")
 
     st.divider()
 
@@ -768,7 +640,6 @@ elif page == "🧠 Predictive Clinical AI":
         input_data = input_data[model_features]
 
         prediction_probability = readmission_model.predict_proba(input_data)[0][1]
-
         risk_score = round(prediction_probability * 100, 2)
 
         st.markdown("## 📊 Real ML Readmission Risk Result")
@@ -776,10 +647,7 @@ elif page == "🧠 Predictive Clinical AI":
         col4, col5 = st.columns([1, 2])
 
         with col4:
-            st.metric(
-                "Predicted 30-Day Readmission Risk",
-                f"{risk_score}%"
-            )
+            st.metric("Predicted 30-Day Readmission Risk", f"{risk_score}%")
 
         with col5:
             if risk_score < 30:
@@ -805,7 +673,6 @@ elif page == "🧠 Predictive Clinical AI":
                 }
             )
         )
-
         st.plotly_chart(fig_risk, use_container_width=True)
 
         st.subheader("Executive ML Interpretation")
@@ -815,7 +682,7 @@ elif page == "🧠 Predictive Clinical AI":
             - The trained machine learning model estimates a {risk_score}% probability of 30-day diabetic readmission.
             - This prediction is generated from the saved production model: models/predictive/readmission_model.pkl.
             - Inputs include demographic, admission, utilization, medication, laboratory, and diabetes management variables.
-            - The output should support clinical review, discharge planning, and operational risk stratification.
+            - The output supports clinical review, discharge planning, and operational risk stratification.
             """
         )
 
@@ -839,7 +706,6 @@ elif page == "🔍 Explainable AI Intelligence":
         feature_df = pd.read_csv(feature_importance_path)
 
         col1, col2, col3 = st.columns(3)
-
         col1.metric("Features Analyzed", len(feature_df))
         col2.metric("Top Predictor", feature_df.iloc[0]["feature"])
         col3.metric("Explainability Engine", "SHAP + Random Forest")
@@ -847,7 +713,6 @@ elif page == "🔍 Explainable AI Intelligence":
         st.divider()
 
         st.subheader("📊 AI Feature Importance Rankings")
-
         st.dataframe(feature_df, use_container_width=True)
 
         fig_importance = px.bar(
@@ -857,11 +722,9 @@ elif page == "🔍 Explainable AI Intelligence":
             color="importance",
             title="Top 10 AI Feature Importance Drivers"
         )
-
         st.plotly_chart(fig_importance, use_container_width=True)
 
         st.subheader("🧠 Explainable AI: SHAP Summary")
-
         st.image(shap_image_path, use_container_width=True)
 
     except Exception:
@@ -914,7 +777,6 @@ elif page == "📈 Operational Forecasting":
         markers=True,
         title="Projected Bed & ICU Occupancy Pressure"
     )
-
     st.plotly_chart(fig_forecast, use_container_width=True)
 
 
@@ -923,18 +785,11 @@ elif page == "📈 Operational Forecasting":
 # ==========================================
 
 elif page == "📘 Executive Insights & Strategy":
-     
+
     st.title("🏆 Executive Insights & Recommendations")
-    
 
     st.markdown("""
     <div class="analytics-card">
-
-    <div class="analytics-title">
-                
-
-    
-    </div>
 
     <div class="analytics-subtitle">
     Executive insights and recommendations generated from enterprise healthcare utilization, predictive AI, operational intelligence, forecasting, financial analytics, and explainable AI modeling.
@@ -942,38 +797,22 @@ elif page == "📘 Executive Insights & Strategy":
 
     <hr class="section-divider">
 
-    <h3 style="color:#0f172a;">📊  Executive Insights</h3>
+    <h3 style="color:#0f172a;">📊 Executive Insights</h3>
 
     <ul style="line-height:1.9; color:#334155;">
-
     <li>Total hospital admissions analyzed: <b>101,766</b></li>
-
     <li>Overall enterprise readmission rate: <b>46.09%</b></li>
-
     <li>Estimated inpatient bed occupancy: <b>79.9%</b></li>
-
     <li>Estimated ICU occupancy: <b>87.9%</b></li>
-
     <li>Forecasted ICU occupancy projected to reach approximately <b>95.8%</b></li>
-
-    <li>Average inpatient length of stay (LOS): <b>4.40 days</b></li>
-
+    <li>Average inpatient length of stay: <b>4.40 days</b></li>
     <li>Emergency admission utilization exceeded <b>71.23%</b></li>
-
     <li>Estimated enterprise operational cost burden exceeded <b>$865M</b></li>
-
     <li>Estimated readmission-related financial burden reached approximately <b>$562.8M</b></li>
-
     <li>LOS-related operational cost exposure exceeded approximately <b>$805.3M</b></li>
-
     <li>Potential 20% readmission reduction could generate approximately <b>$112.6M</b> in projected savings</li>
-
     <li>Highest inpatient utilization concentration occurred among patients aged <b>60–80 years</b></li>
-
     <li>Explainable AI identified inpatient utilization frequency, discharge disposition, emergency utilization, LOS duration, medication burden, and diagnosis complexity as the strongest readmission risk drivers.</li>
-
-    <li>Forecasting models indicate progressive escalation in inpatient utilization, ICU occupancy, and operational capacity pressure.</li>
-
     </ul>
 
     <hr class="section-divider">
@@ -981,25 +820,15 @@ elif page == "📘 Executive Insights & Strategy":
     <h3 style="color:#0f172a;">🚀 Executive Recommendations</h3>
 
     <ul style="line-height:1.9; color:#334155;">
-
     <li>Prioritize enterprise readmission reduction initiatives, where readmission burden reached <b>46.09%</b>.</li>
-
     <li>Implement predictive AI discharge-risk scoring to support discharge planning and post-discharge follow-up.</li>
-
     <li>Strengthen ICU throughput optimization and surge-capacity planning as ICU occupancy approaches <b>95.8%</b>.</li>
-
     <li>Reduce inpatient LOS through multidisciplinary discharge coordination and AI-assisted care progression monitoring.</li>
-
     <li>Optimize emergency department throughput workflows as ED utilization exceeded <b>71.23%</b>.</li>
-
     <li>Prioritize population health interventions for patients aged <b>60–80 years</b>.</li>
-
     <li>Deploy explainable AI governance frameworks to improve transparency, executive trust, and AI adoption.</li>
-
     <li>Monitor LOS-related financial exposure, which exceeded approximately <b>$805M</b>.</li>
-
     <li>Expand predictive operational intelligence capabilities to improve staffing allocation and enterprise forecasting.</li>
-
     </ul>
 
     <hr class="section-divider">
@@ -1007,26 +836,17 @@ elif page == "📘 Executive Insights & Strategy":
     <h3 style="color:#0f172a;">🏆 Strategic Executive Summary</h3>
 
     <p style="line-height:1.9; color:#475569; font-size:16px;">
-
     Across <b>101,766 hospital admissions</b>, the platform identified an enterprise readmission rate of <b>46.09%</b>, ICU occupancy of <b>87.9%</b>, average LOS of <b>4.40 days</b>, and operational cost exposure exceeding <b>$865M</b>.
-
     <br><br>
-
     Operational forecasting identified progressive increases in inpatient and ICU utilization, with ICU occupancy projected to approach <b>95.8%</b>, indicating elevated enterprise capacity risk.
-
     <br><br>
-
-    Explainable AI modeling identified inpatient utilization frequency, discharge complexity, emergency utilization, LOS duration, and medication burden as the strongest drivers of readmission risk.
-
-    <br><br>
-
     The highest-impact enterprise priorities include readmission reduction, LOS optimization, ICU capacity management, ED throughput improvement, predictive operational forecasting, financial utilization optimization, and explainable AI-driven healthcare decision support.
-
     </p>
 
     </div>
     """, unsafe_allow_html=True)
-      
+
+
 # ==========================================
 # DATA EXPLORER
 # ==========================================
@@ -1034,5 +854,4 @@ elif page == "📘 Executive Insights & Strategy":
 elif page == "📂 Enterprise Data Explorer":
 
     st.title("📂 Enterprise Data Explorer")
-
     st.dataframe(filtered_df.head(500), use_container_width=True)
