@@ -244,7 +244,7 @@ healthcare-executive-intelligence-platform/
 ## Run Locally
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/healthcare-executive-intelligence-platform.git
+git clone https://github.com/drsam-israel/healthcare-executive-intelligence-platform.git
 
 cd healthcare-executive-intelligence-platform
 
